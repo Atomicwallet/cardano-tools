@@ -21,6 +21,18 @@ else
   echo "NODE keys exists"
 fi
 
+#if [[ ! -f node.cert ]]; then
+#  docker run -it --rm -v ${PWD}:/keys --workdir /keys --entrypoint "" inputoutput/cardano-node:1.23.0 \
+#  cardano-cli shelley node issue-op-cert \
+#  --kes-verification-key-file kes.vkey \
+#  --cold-signing-key-file node.skey \
+#  --operational-certificate-issue-counter node.counter \
+#  --kes-period ${KES_PERIOD} \
+#  --out-file node.cert
+#else
+#  echo "node.cert keys exists"
+#fi
+
 if [[ ! -f vrf.vkey  && ! -f vrf.skey ]]; then
   docker run -it --rm -v ${PWD}:/keys --workdir /keys --entrypoint "" inputoutput/cardano-node:1.23.0 \
   cardano-cli shelley node key-gen-VRF \
