@@ -13,9 +13,7 @@ set -ex
 
 echo "CARDANO_METADATA_URL=${CARDANO_METADATA_URL}"
 curl -s -o poolMetadata.json -fSL ${CARDANO_METADATA_URL}
-CARDANO_METADATA_HASH=$(docker run -it --rm -v ${PWD}:/keys --workdir /keys --entrypoint "" inputoutput/cardano-node:1.21.1 cardano-cli shelley stake-pool metadata-hash --pool-metadata-file poolMetaData.json)
-CARDANO_METADATA_HASH=$(echo $CARDANO_METADATA_HASH|xargs)
-echo "CARDANO_METADATA_HASH=${CARDANO_METADATA_HASH}"
+CARDANO_METADATA_HASH=$(docker run -it --rm -v ${PWD}:/keys --workdir /keys --entrypoint "" inputoutput/cardano-node:1.21.1 cardano-cli shelley stake-pool metadata-hash --pool-metadata-file poolMetaData.json --out-file poolMetaData.hash)
 
 docker run -it --rm -v ${PWD}:/keys --workdir /keys --entrypoint "" inputoutput/cardano-node:1.23.0 \
 cardano-cli shelley stake-pool registration-certificate \
@@ -30,5 +28,5 @@ cardano-cli shelley stake-pool registration-certificate \
 --single-host-pool-relay ${CARDANO_RALAY_HOST} \
 --pool-relay-port 6001 \
 --metadata-url ${CARDANO_METADATA_URL} \
---metadata-hash ${CARDANO_METADATA_HASH} \
+--metadata-hash $(cat poolMetaData.hash) \
 --out-file pool.cert
