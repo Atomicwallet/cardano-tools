@@ -21,7 +21,7 @@ cd ..
 3. Run script
 
 ```
-./cardano-tools-repo/scripts/docker/rotate_kes_keys.sh
+./cardano-tools/scripts/docker/rotate_kes_keys.sh
 ```
 
 4. Sent `kes.vkey` and `node.cert` to server and restart validator node with new keys.
