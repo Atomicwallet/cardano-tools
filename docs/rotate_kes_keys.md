@@ -24,4 +24,6 @@ cd ..
 ./cardano-tools/scripts/docker/rotate_kes_keys.sh
 ```
 
-4. Sent `kes.skey` and `node.cert` to server and restart validator node with new keys.
+4. Copy `kes.vkey` to your cold environment.
+
+5. Copy `kes.skey` and `node.cert` to server and restart validator node with new keys.
