@@ -1,8 +1,8 @@
 #!/bin/bash
 ## Script is taken from Cardano Russian community Telegram channel. 
 
-wget 
-genesisfile="${genesisfile:/tmp/mainnet-shelley-genesis.json}"
+wget -q https://raw.githubusercontent.com/Atomicwallet/cardano-tools/main/scripts/config/mainnet-shelley-genesis.json -O /tmp/mainnet-shelley-genesis.json
+genesisfile="${genesisfile:-/tmp/mainnet-shelley-genesis.json}"
 
 if [ ! -f $genesisfile ]; then
     echo "File does not exists: $genesisfile"
