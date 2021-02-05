@@ -5,7 +5,7 @@ set -e
 # export CARDANO_PLEDGE_POOL=1000000000
 # export CARDANO_COST=345000000
 # export CARDANO_MARGIN=0.05
-# export CARDANO_RALAY_HOST=cardano-relay.domain.com
+# export CARDANO_RELAY_HOST=cardano-relay.domain.com
 # export CARDANO_METADATA_URL=https://domain.com/poolMetadata.json
 
 #!/bin/bash
@@ -25,7 +25,7 @@ cardano-cli shelley stake-pool registration-certificate \
 --pool-reward-account-verification-key-file stake.vkey \
 --pool-owner-stake-verification-key-file stake.vkey \
 --mainnet \
---single-host-pool-relay ${CARDANO_RALAY_HOST} \
+--single-host-pool-relay ${CARDANO_RELAY_HOST} \
 --pool-relay-port 6001 \
 --metadata-url ${CARDANO_METADATA_URL} \
 --metadata-hash $(cat poolMetaData.hash) \
