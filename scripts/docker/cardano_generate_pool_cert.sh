@@ -16,7 +16,7 @@ curl -s -o poolMetadata.json -fSL ${CARDANO_METADATA_URL}
 CARDANO_METADATA_HASH=$(docker run -it --rm -v ${PWD}:/keys --workdir /keys --entrypoint "" inputoutput/cardano-node:1.21.1 cardano-cli shelley stake-pool metadata-hash --pool-metadata-file poolMetaData.json --out-file poolMetaData.hash)
 
 docker run -it --rm -v ${PWD}:/keys --workdir /keys --entrypoint "" inputoutput/cardano-node:1.23.0 \
-cardano-cli shelley stake-pool registration-certificate \
+cardano-cli stake-pool registration-certificate \
 --cold-verification-key-file node.vkey \
 --vrf-verification-key-file vrf.vkey \
 --pool-pledge ${CARDANO_PLEDGE_POOL} \
