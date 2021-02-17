@@ -1,4 +1,5 @@
 #!/bin/bash
+set -e
 
 export TMP_CARDANO_PATH=$(mktemp -d)
 echo $TMP_CARDANO_PATH
@@ -12,3 +13,19 @@ curl -s https://hydra.iohk.io/build/5577872/download/1/cardano-node-1.25.0-macos
     libiconv.dylib \
     libsodium.23.dylib \
     libz.dylib
+
+cd ${TMP_CARDANO_PATH}
+
+# Install cardano-cli
+cp ./cardano-cli /usr/local/bin/
+chmod +x /usr/local/bin/cardano-cli
+
+# Install libs
+mkdir /usr/local/lib/cardano
+cp *.dylib  /usr/local/lib/cardano/
+for lib in `ls *.dylib`; then
+  do 
+  ln -s /usr/local/lib/cardano/$lib /usr/local/lib/$lib
+done
+
+
