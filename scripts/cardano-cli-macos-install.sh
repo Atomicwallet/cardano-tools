@@ -21,11 +21,8 @@ cp ./cardano-cli /usr/local/bin/
 chmod +x /usr/local/bin/cardano-cli
 
 # Install libs
-mkdir /usr/local/lib/cardano
+mkdir -p /usr/local/lib/cardano
 cp *.dylib  /usr/local/lib/cardano/
-for lib in `ls *.dylib`; then
-  do 
-  ln -s /usr/local/lib/cardano/$lib /usr/local/lib/$lib
-done
+for lib in `ls *.dylib`; do ln -s /usr/local/lib/cardano/$lib /usr/local/lib/; done
 
 
