@@ -1,0 +1,9 @@
+{
+  "Producers": [
+    {
+      "addr": "cardano-relays.atomicwallet.io",
+      "port": 6001,
+      "valency": 2
+    }
+  ]
+}
