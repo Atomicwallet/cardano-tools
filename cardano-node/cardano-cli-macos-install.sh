@@ -44,4 +44,4 @@ launchctl unload  ~/Library/LaunchAgents/cardano-node.plist 2>/dev/null
 launchctl load  ~/Library/LaunchAgents/cardano-node.plist 2>/dev/null
 
 echo "CARDANO_NODE_SOCKET_PATH=~/cardano-node/node.socket cardano-cli query tip --mainnet" > /usr/local/bin/cardano-sync-status
-chmod +x /usr/loca/bin/cardano-sync-status
+chmod +x /usr/local/bin/cardano-sync-status
