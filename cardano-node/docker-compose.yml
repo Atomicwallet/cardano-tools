@@ -4,7 +4,7 @@ services:
   cardano-node: 
     container_name: cardano-node
     image: atomicwallet/cardano-node-base:master-cc3c3cc5-1
-    network_mode: host
+    #network_mode: host
     environment:
       CARDANO_NODE_SOCKET_PATH: /ipc/node.socket
       LD_LIBRARY_PATH: /usr/local/lib:\$LD_LIBRARY_PATH
