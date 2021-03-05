@@ -31,7 +31,11 @@ for lib in `ls ${TMP_CARDANO_PATH}/*.dylib| xargs -n 1 basename`; do ln -sf /usr
 
 mkdir -p ~/cardano-node/configuration/cardano/
 mkdir -p ~/cardano-node/data
-cp ./config/* ~/cardano-node/configuration/cardano/
+
+wget -s https://hydra.iohk.io/job/Cardano/cardano-node/cardano-deployment/latest-finished/download/1/mainnet-config.json -O ~/cardano-node/configuration/cardano/mainnet-config.json
+wget -s https://hydra.iohk.io/job/Cardano/cardano-node/cardano-deployment/latest-finished/download/1/mainnet-byron-genesis.json -O ~/cardano-node/configuration/cardano/mainnet-byron-genesis.json
+wget -s https://hydra.iohk.io/job/Cardano/cardano-node/cardano-deployment/latest-finished/download/1/mainnet-shelley-genesis.json -O ~/cardano-node/configuration/cardano/mainnet-shelley-genesis.json
+wget -s https://hydra.iohk.io/job/Cardano/cardano-node/cardano-deployment/latest-finished/download/1/mainnet-topology.json -O ~/cardano-node/configuration/cardano/mainnet-topology.json
 
 export USER=$(whoami)
 envsubst < system/cardano-node.mac.plist > ~/Library/LaunchAgents/cardano-node.plist
