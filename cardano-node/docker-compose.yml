@@ -2,8 +2,11 @@ version: '3.7'
 
 services:
   cardano-node: 
+    build:
+      context: .
+      dockerfile: ./Dockerfile
     container_name: cardano-node
-    image: atomicwallet/cardano-node-base:master-cc3c3cc5-1
+    #image: atomicwallet/cardano-node-base:master-cc3c3cc5-1
     network_mode: host
     environment:
       CARDANO_NODE_SOCKET_PATH: /ipc/node.socket
