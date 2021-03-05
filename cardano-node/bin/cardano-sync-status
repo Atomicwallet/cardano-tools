@@ -1,0 +1,3 @@
+#!/bin/bash
+export CARDANO_NODE_SOCKET_PATH=${CARDANO_NODE_SOCKET_PATH:-'~/cardano-node/node.socket'}
+cardano-cli query tip --mainnet
