@@ -20,7 +20,8 @@ services:
       - run
       - --config=/config/mainnet-config.json
       - --database-path=/data/db
-      - --topology=/config/mainnet-atom-topology.json
+      #- --topology=/config/mainnet-atom-topology.json
+      - --topology=/config/mainnet-topology.json
       #- --host-addr=0.0.0.0
       - --port=3001
       - --socket-path=/ipc/node.socket
