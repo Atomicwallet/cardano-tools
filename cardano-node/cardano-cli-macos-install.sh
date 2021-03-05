@@ -39,6 +39,8 @@ wget -q https://hydra.iohk.io/job/Cardano/cardano-node/cardano-deployment/latest
 
 export USER=$(whoami)
 envsubst < system/cardano-node.mac.plist > ~/Library/LaunchAgents/cardano-node.plist
+launchctl unload  ~/Library/LaunchAgents/cardano-node.plist 2>/dev/null
+launchctl load  ~/Library/LaunchAgents/cardano-node.plist 2>/dev/null
 
 
 
