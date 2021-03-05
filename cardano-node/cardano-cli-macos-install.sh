@@ -36,9 +36,10 @@ wget -q https://hydra.iohk.io/job/Cardano/cardano-node/cardano-deployment/latest
 wget -q https://hydra.iohk.io/job/Cardano/cardano-node/cardano-deployment/latest-finished/download/1/mainnet-byron-genesis.json -O ~/cardano-node/configuration/cardano/mainnet-byron-genesis.json
 wget -q https://hydra.iohk.io/job/Cardano/cardano-node/cardano-deployment/latest-finished/download/1/mainnet-shelley-genesis.json -O ~/cardano-node/configuration/cardano/mainnet-shelley-genesis.json
 wget -q https://hydra.iohk.io/job/Cardano/cardano-node/cardano-deployment/latest-finished/download/1/mainnet-topology.json -O ~/cardano-node/configuration/cardano/mainnet-topology.json
+wget -q https://raw.githubusercontent.com/Atomicwallet/cardano-tools/main/cardano-node/system/cardano-node.mac.plist -O ${TMP_CARDANO_PATH}/cardano-node.mac.plist
 
 export USER=$(whoami)
-envsubst < system/cardano-node.mac.plist > ~/Library/LaunchAgents/cardano-node.plist
+envsubst < ${TMP_CARDANO_PATH}/cardano-node.mac.plist > ~/Library/LaunchAgents/cardano-node.plist
 launchctl unload  ~/Library/LaunchAgents/cardano-node.plist 2>/dev/null
 launchctl load  ~/Library/LaunchAgents/cardano-node.plist 2>/dev/null
 
