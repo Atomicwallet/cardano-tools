@@ -26,7 +26,7 @@
             <string>--database-path=/Users/${USER}/cardano-node/data/db</string>
             <string>--topology=/Users/${USER}/cardano-node/configuration/cardano/mainnet-topology.json</string>
             <string>--port=3001</string>
-            <string>--socket-path=/Users/${USER}/cardano-node/node.socke</string>
+            <string>--socket-path=/Users/${USER}/cardano-node/node.socket</string>
     </array>
 </dict>
 </plist>
