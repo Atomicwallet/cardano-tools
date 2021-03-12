@@ -43,8 +43,14 @@ wget -q https://raw.githubusercontent.com/Atomicwallet/cardano-tools/main/cardan
 chmod +x /usr/local/bin/cardano-sync-status
 chmod +x /usr/local/bin/cardano_generate_keys
 
-export USER=$(whoami)
 envsubst < ${TMP_CARDANO_PATH}/cardano-node.mac.plist > ~/Library/LaunchAgents/cardano-node.plist
-launchctl unload  ~/Library/LaunchAgents/cardano-node.plist 2>/dev/null
-launchctl load  ~/Library/LaunchAgents/cardano-node.plist 2>/dev/null
+
+pgrep cardano-node || exit_code=$?
+if [[ ${exit_code} -ne 0 ]]; 
+then 
+  launchctl unload  ~/Library/LaunchAgents/cardano-node.plist 2>/dev/null
+  launchctl load  ~/Library/LaunchAgents/cardano-node.plist 2>/dev/null
+ fi
+
+
 
