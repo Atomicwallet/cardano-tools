@@ -1,12 +1,12 @@
 #!/bin/bash
 set -e
 
-export CARDANO_NODE_SOCKET_PATH=${CARDANO_NODE_SOCKET_PATH:-~/cardano-node/node.socket}
+prefix_file=$(echo $1 | awk -F'.' '{print $1}')
 
 cardano-cli transaction sign \
---tx-body-file tx.raw \
+--tx-body-file $1 \
 --signing-key-file payment.skey \
 --signing-key-file node.skey \
 --signing-key-file stake.skey \
 --mainnet \
---out-file withdraw_rewards.signed
+--out-file $prefix_file.signed

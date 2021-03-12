@@ -4,6 +4,7 @@ set -e
 export CARDANO_NODE_SOCKET_PATH=${CARDANO_NODE_SOCKET_PATH:-~/cardano-node/node.socket}
 
 # Get balance of the rewards address
+
 REWARD_BALANCE=$(cardano-cli query stake-address-info --mainnet --mary-era --address $(cat stake.addr)| jq .[0].rewardAccountBalance)
 echo "REWARD_BALANCE: $REWARD_BALANCE"
 
@@ -14,20 +15,25 @@ cardano-cli query protocol-parameters \
 --out-file ~/cardano-node/protocol.json
 
 # Get payment address balance
+
 cardano-cli query utxo --mainnet --mary-era --address $(cat payment.addr) --out-file tmp_balance.json
-PAYMENT_TX_HASH=$(cat tmp_balance.json | jq 'keys'[0])
-PAYMENT_BALANCE=$(cat tmp_balance.json | jq 'first(.[] | .amount[0])')
+PAYMENT_TX_HASH=$(cat tmp_balance.json | jq -r 'keys'[0])
+#PAYMENT_BALANCE=$(cat tmp_balance.json | jq 'first(.[] | .amount[0])')
+PAYMENT_BALANCE=$(cat tmp_balance.json | jq 'first(.[] | .value.lovelace)')
 echo "PAYMENT_TX_HASH: $PAYMENT_TX_HASH"
 echo "PAYMENT_BALANCE: $PAYMENT_BALANCE"
 
 # Draft the withdraw transaction to transfer the rewards to a payment.addr
+echo "Generate withdraw_rewards.raw without fee ..."
 
 cardano-cli transaction build-raw --tx-in $PAYMENT_TX_HASH \
 --tx-out $(cat payment.addr)+0 \
 --withdrawal $(cat stake.addr)+$REWARD_BALANCE \
 --invalid-hereafter 0 \
 --fee 0 \
---out-file /config/withdraw_rewards.raw
+--out-file withdraw_rewards.raw
+
+echo "withdraw_rewards.raw without fee have generated"
 
 # Calculate transaction fees
 
@@ -45,13 +51,12 @@ echo "FEE: $FEE"
 # Determine the TTL (time to Live) for the transaction
 
 TX_TTL_LIMIT_SLOTS=86400
-SLOT_NO=$(cardano-cli query tip --mainnet| jq .slotNo)
+SLOT_NO=$(cardano-cli query tip --mainnet| jq .slot)
 TX_TTL=$(expr $SLOT_NO + $TX_TTL_LIMIT_SLOTS)
 echo "SLOT_NO: $SLOT_NO"
 echo "TX_TTL: $TX_TTL"
 
 # Calculate the change to send back to payment.addr
-
 echo "expr $PAYMENT_BALANCE - $FEE + $REWARD_BALANCE"
 PAYMENT_CHANGE_BACK=$(expr $PAYMENT_BALANCE - $FEE + $REWARD_BALANCE)
 echo "PAYMENT_CHANGE_BACK: $PAYMENT_CHANGE_BACK"
