@@ -3,10 +3,8 @@ set -e
 
 export CARDANO_NODE_SOCKET_PATH=${CARDANO_NODE_SOCKET_PATH:-~/cardano-node/node.socket}
 
-keys_path=${CARDANO_KEYS_PATH:./keys}
 # Get balance of the rewards address
-
-REWARD_BALANCE=$(cardano-cli query stake-address-info --mainnet --mary-era --address $(cat /keys/stake.addr)| jq .[0].rewardAccountBalance)
+REWARD_BALANCE=$(cardano-cli query stake-address-info --mainnet --mary-era --address $(cat stake.addr)| jq .[0].rewardAccountBalance)
 echo "REWARD_BALANCE: $REWARD_BALANCE"
 
 # Get payment address balance
