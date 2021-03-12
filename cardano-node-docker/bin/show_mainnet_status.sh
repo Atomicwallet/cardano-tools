@@ -1,0 +1,1 @@
+docker exec -it cardano-node cardano-cli query tip --mainnet
