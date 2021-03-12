@@ -1,0 +1,11 @@
+#!/bin/bash
+
+set -e
+
+cardano-cli transaction sign \
+--tx-body-file tx.raw \
+--signing-key-file payment.skey \
+--signing-key-file node.skey \
+--signing-key-file stake.skey \
+--mainnet \
+--out-file withdraw_rewards.signed
