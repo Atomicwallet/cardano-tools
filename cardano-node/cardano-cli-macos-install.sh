@@ -39,13 +39,13 @@ wget -q https://hydra.iohk.io/job/Cardano/cardano-node/cardano-deployment/latest
 wget -q https://raw.githubusercontent.com/Atomicwallet/cardano-tools/main/cardano-node/system/cardano-node.mac.plist -O ${TMP_CARDANO_PATH}/cardano-node.mac.plist
 wget -q https://raw.githubusercontent.com/Atomicwallet/cardano-tools/main/cardano-node/bin/cardano-sync-status -O /usr/local/bin/cardano-sync-status
 wget -q https://raw.githubusercontent.com/Atomicwallet/cardano-tools/main/cardano-node/bin/cardano_generate_keys.sh -O /usr/local/bin/cardano_generate_keys
-wget -q https://raw.githubusercontent.com/Atomicwallet/cardano-tools/main/cardano-node/bin/cardano_stop -O /usr/local/bin/cardano_stop
-wget -q https://raw.githubusercontent.com/Atomicwallet/cardano-tools/main/cardano-node/bin/cardano_start -O /usr/local/bin/cardano_start
+wget -q https://raw.githubusercontent.com/Atomicwallet/cardano-tools/main/cardano-node/bin/cardano-stop -O /usr/local/bin/cardano-stop
+wget -q https://raw.githubusercontent.com/Atomicwallet/cardano-tools/main/cardano-node/bin/cardano-start -O /usr/local/bin/cardano-start
 
-chmod +x /usr/local/bin/cardano_sync_status
+chmod +x /usr/local/bin/cardano-sync-status
 chmod +x /usr/local/bin/cardano_generate_keys
-chmod +x /usr/local/bin/cardano_stop
-chmod +x /usr/local/bin/cardano_start
+chmod +x /usr/local/bin/cardano-stop
+chmod +x /usr/local/bin/cardano-start
 
 envsubst < ${TMP_CARDANO_PATH}/cardano-node.mac.plist > ~/Library/LaunchAgents/cardano-node.plist
 
