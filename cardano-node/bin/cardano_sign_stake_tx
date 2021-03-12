@@ -6,5 +6,6 @@ prefix_file=$(echo $1 | awk -F'.' '{print $1}')
 cardano-cli transaction sign \
 --tx-body-file $1 \
 --signing-key-file payment.skey \
+--signing-key-file stake.skey \
 --mainnet \
---out-file $prefix_file.signed
+--out-file ${prefix_file}.signed

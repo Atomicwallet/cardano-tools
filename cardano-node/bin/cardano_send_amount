@@ -3,10 +3,8 @@ set -e
 
 export CARDANO_NODE_SOCKET_PATH=${CARDANO_NODE_SOCKET_PATH:-~/cardano-node/node.socket}
 
-# Get balance of the rewards address
-
-REWARD_BALANCE=$(cardano-cli query stake-address-info --mainnet --mary-era --address $(cat stake.addr)| jq .[0].rewardAccountBalance)
-echo "REWARD_BALANCE: $REWARD_BALANCE"
+AMOUNT=$1
+AMOUNT_LOVELACE=$(expr $AMOUNT \* 1000000)
 
 # Create protocol.json
 cardano-cli query protocol-parameters \
@@ -24,47 +22,58 @@ echo "PAYMENT_TX_HASH: $PAYMENT_TX_HASH"
 echo "PAYMENT_BALANCE: $PAYMENT_BALANCE"
 
 # Draft the withdraw transaction to transfer the rewards to a payment.addr
-echo "Generate withdraw_rewards.raw without fee ..."
+echo "Generate draft.raw without fee ..."
 
-cardano-cli transaction build-raw --tx-in $PAYMENT_TX_HASH \
+cardano-cli transaction build-raw \
+--tx-in $PAYMENT_TX_HASH \
+--tx-out $(cat payment2.addr)+0 \
 --tx-out $(cat payment.addr)+0 \
---withdrawal $(cat stake.addr)+$REWARD_BALANCE \
 --invalid-hereafter 0 \
 --fee 0 \
---out-file withdraw_rewards.raw
+--out-file tx.draft
 
-echo "withdraw_rewards.raw without fee have generated"
+echo "draft.raw without fee have generated"
 
 # Calculate transaction fees
 
 FEE_RAW=$(cardano-cli transaction calculate-min-fee \
 --mainnet \
---tx-body-file withdraw_rewards.raw  \
+--tx-body-file tx.draft  \
 --tx-in-count 1 \
---tx-out-count 1 \
+--tx-out-count 2 \
 --witness-count 1 \
 --byron-witness-count 0 \
 --protocol-params-file ~/cardano-node/protocol.json)
+
 FEE=$(echo $FEE_RAW | awk '{print $1}')
 echo "FEE: $FEE"
 
 # Determine the TTL (time to Live) for the transaction
-
-TX_TTL_LIMIT_SLOTS=86400
+TX_TTL_LIMIT_SLOTS=200
 SLOT_NO=$(cardano-cli query tip --mainnet| jq .slot)
 TX_TTL=$(expr $SLOT_NO + $TX_TTL_LIMIT_SLOTS)
 echo "SLOT_NO: $SLOT_NO"
 echo "TX_TTL: $TX_TTL"
 
 # Calculate the change to send back to payment.addr
-echo "expr $PAYMENT_BALANCE - $FEE + $REWARD_BALANCE"
-PAYMENT_CHANGE_BACK=$(expr $PAYMENT_BALANCE - $FEE + $REWARD_BALANCE)
+echo "expr $PAYMENT_BALANCE - $AMOUNT_LOVELACE - $FEE"
+PAYMENT_CHANGE_BACK=$(expr $PAYMENT_BALANCE - $AMOUNT_LOVELACE - $FEE)
 echo "PAYMENT_CHANGE_BACK: $PAYMENT_CHANGE_BACK"
 
 # Build the raw transaction
-cardano-cli transaction build-raw --tx-in $PAYMENT_TX_HASH \
+cardano-cli transaction build-raw \
+--tx-in $PAYMENT_TX_HASH \
+--tx-out $(cat payment2.addr)+${AMOUNT_LOVELACE} \
 --tx-out $(cat payment.addr)+${PAYMENT_CHANGE_BACK} \
---withdrawal $(cat stake.addr)+${REWARD_BALANCE} \
 --invalid-hereafter $TX_TTL \
 --fee $FEE \
---out-file withdraw_rewards.raw
+--out-file tx.raw
+
+# Sign tx
+cardano-cli transaction sign \
+--tx-body-file tx.raw \
+--signing-key-file payment.skey \
+--mainnet \
+--out-file tx.signed
+
+cardano-cli transaction submit --tx-file tx.signed --mainnet
