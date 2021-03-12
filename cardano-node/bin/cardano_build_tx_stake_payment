@@ -7,8 +7,13 @@ export CARDANO_NODE_SOCKET_PATH=${CARDANO_NODE_SOCKET_PATH:-~/cardano-node/node.
 REWARD_BALANCE=$(cardano-cli query stake-address-info --mainnet --mary-era --address $(cat stake.addr)| jq .[0].rewardAccountBalance)
 echo "REWARD_BALANCE: $REWARD_BALANCE"
 
-# Get payment address balance
+# Create protocol.json
+cardano-cli query protocol-parameters \
+--mary-era \
+--mainnet \
+--out-file ~/cardano-node/protocol.json
 
+# Get payment address balance
 cardano-cli query utxo --mainnet --mary-era --address $(cat payment.addr) --out-file tmp_balance.json
 PAYMENT_TX_HASH=$(cat tmp_balance.json | jq 'keys'[0])
 PAYMENT_BALANCE=$(cat tmp_balance.json | jq 'first(.[] | .amount[0])')
@@ -28,12 +33,12 @@ cardano-cli transaction build-raw --tx-in $PAYMENT_TX_HASH \
 
 FEE_RAW=$(cardano-cli transaction calculate-min-fee \
 --mainnet \
---tx-body-file /config/withdraw_rewards.raw  \
+--tx-body-file withdraw_rewards.raw  \
 --tx-in-count 1 \
 --tx-out-count 1 \
 --witness-count 1 \
 --byron-witness-count 0 \
---protocol-params-file /config/params.json)
+--protocol-params-file ~/cardano-node/protocol.json)
 FEE=$(echo $FEE_RAW | awk '{print $1}')
 echo "FEE: $FEE"
 
