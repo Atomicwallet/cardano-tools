@@ -1,0 +1,8 @@
+#!/bin/bash
+set -e 
+
+export CARDANO_NODE_SOCKET_PATH=${CARDANO_NODE_SOCKET_PATH:-~/cardano-node/node.socket}
+
+cardano-cli transaction submit \
+--tx-file $1 \
+--mainnet

@@ -41,6 +41,7 @@ wget -q https://raw.githubusercontent.com/Atomicwallet/cardano-tools/main/cardan
 wget -q https://raw.githubusercontent.com/Atomicwallet/cardano-tools/main/cardano-node/bin/cardano_generate_keys -O /usr/local/bin/cardano_generate_keys
 wget -q https://raw.githubusercontent.com/Atomicwallet/cardano-tools/main/cardano-node/bin/cardano_build_tx_stake_payment -O /usr/local/bin/cardano_build_tx_stake_payment
 wget -q https://raw.githubusercontent.com/Atomicwallet/cardano-tools/main/cardano-node/bin/cardano_sign_tx -O /usr/local/bin/cardano_sign_tx
+wget -q https://raw.githubusercontent.com/Atomicwallet/cardano-tools/main/cardano-node/bin/cardano_submit_tx -O /usr/local/bin/cardano_submit_tx
 wget -q https://raw.githubusercontent.com/Atomicwallet/cardano-tools/main/cardano-node/bin/cardano-stop -O /usr/local/bin/cardano-stop
 wget -q https://raw.githubusercontent.com/Atomicwallet/cardano-tools/main/cardano-node/bin/cardano-start -O /usr/local/bin/cardano-start
 
@@ -48,6 +49,7 @@ chmod +x /usr/local/bin/cardano-sync-status
 chmod +x /usr/local/bin/cardano_generate_keys
 chmod +x /usr/local/bin/cardano_build_tx_stake_payment
 chmod +x /usr/local/bin/cardano_sign_tx
+chmod +x /usr/local/bin/cardano_submit_tx
 chmod +x /usr/local/bin/cardano-stop
 chmod +x /usr/local/bin/cardano-start
 
