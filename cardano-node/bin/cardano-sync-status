@@ -1,11 +1,16 @@
 #!/bin/bash
 export CARDANO_NODE_SOCKET_PATH=${CARDANO_NODE_SOCKET_PATH:-~/cardano-node/node.socket}
-LAST_BLOCK=$(curl -s https://ada-atomic.atomicwallet.io/lastblock | jq .block_no)
-LOCAL_NODE_BLOCK=$(cardano-cli query tip --mainnet | jq .block)
-if [ "$LAST_BLOCK" -eq "$LOCAL_NODE_BLOCK" ]
+BEST_BLOCK=$(curl -s https://ada-atomic.atomicwallet.io/lastblock | jq .block_no)
+LOCAL_NODE_STATUS=$(cardano-cli query tip --mainnet)
+LOCAL_LAST_BLOCK=$(echo $LOCAL_NODE_STATUS | jq .block)
+echo "Best block: $BEST_BLOCK"
+delta=$(expr $BEST_BLOCK - $LOCAL_LAST_BLOCK)
+if [ "$delta" -lt 2 ]
 then
   echo "cardano-node is synced!"
 else
   echo "cardano-node is not sycned yet!" 
+  echo "Best block: $BEST_BLOCK" 
 fi
-cardano-cli query tip --mainnet
+echo $LOCAL_NODE_STATUS
+#cardano-cli query tip --mainnet
