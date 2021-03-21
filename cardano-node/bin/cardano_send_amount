@@ -4,7 +4,8 @@ set -e
 export CARDANO_NODE_SOCKET_PATH=${CARDANO_NODE_SOCKET_PATH:-~/cardano-node/node.socket}
 
 AMOUNT=$1
-AMOUNT_LOVELACE=$(expr $AMOUNT \* 1000000)
+#AMOUNT_LOVELACE=$(expr $AMOUNT \* 1000000)
+AMOUNT_LOVELACE=$(echo "scale=0; ($AMOUNT * 1000000) / 1"| bc -l)
 
 # Create protocol.json
 cardano-cli query protocol-parameters \
