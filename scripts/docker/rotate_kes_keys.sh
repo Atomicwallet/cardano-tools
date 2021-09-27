@@ -1,6 +1,6 @@
 #!/bin/bash
 
-slotNo=$(curl -s https://ada-atomic.atomicwallet.io/lastblock| jq .slot_no)
+slotNo=$(curl -s https://cardano-atomic-01.atomicwallet.io/lastblock| jq .slot_no)
 slotsPerKESPeriod=129600
 kesPeriod=$((${slotNo} / ${slotsPerKESPeriod}))
 startKesPeriod=${kesPeriod}

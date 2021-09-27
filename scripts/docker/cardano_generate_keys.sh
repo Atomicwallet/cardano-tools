@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -e 
+set -e
 
 if [[ ! -f kes.vkey && ! -f kes.skey ]]; then
   docker run -it --rm -v ${PWD}:/keys --workdir /keys --entrypoint "" inputoutput/cardano-node:1.23.0 \
@@ -21,7 +21,7 @@ else
   echo "NODE keys exists"
 fi
 
-slotNo=$(curl -s https://ada-atomic.atomicwallet.io/lastblock| jq .slot_no)
+slotNo=$(curl -s https://cardano-atomic-01.atomicwallet.io/lastblock| jq .slot_no)
 slotsPerKESPeriod=129600
 kesPeriod=$((${slotNo} / ${slotsPerKESPeriod}))
 startKesPeriod=${kesPeriod}
