@@ -9,13 +9,12 @@ AMOUNT_LOVELACE=$(echo "scale=0; ($AMOUNT * 1000000) / 1"| bc -l)
 
 # Create protocol.json
 cardano-cli query protocol-parameters \
---mary-era \
 --mainnet \
 --out-file ~/cardano-node/protocol.json
 
 # Get payment address balance
 
-cardano-cli query utxo --mainnet --mary-era --address $(cat payment.addr) --out-file tmp_balance.json
+cardano-cli query utxo --mainnet --address $(cat payment.addr) --out-file tmp_balance.json
 PAYMENT_TX_HASH=$(cat tmp_balance.json | jq -r 'keys'[0])
 #PAYMENT_BALANCE=$(cat tmp_balance.json | jq 'first(.[] | .amount[0])')
 PAYMENT_BALANCE=$(cat tmp_balance.json | jq 'first(.[] | .value.lovelace)')

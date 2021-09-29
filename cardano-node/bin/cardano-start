@@ -1,8 +1,8 @@
 #!/bin/bash
 
-pgrep cardano-node || exit_code=$?
-if [[ ${exit_code} -ne 0 ]]; 
-then 
+pgrep cardano-node --socket-path ~/cardano-node/node.socket || exit_code=$?
+if [[ ${exit_code} -ne 0 ]];
+then
   launchctl unload  ~/Library/LaunchAgents/cardano-node.plist 2>/dev/null
   launchctl load  ~/Library/LaunchAgents/cardano-node.plist 2>/dev/null
  fi
