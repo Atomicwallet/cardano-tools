@@ -8,13 +8,13 @@ curl -s https://hydra.iohk.io/build/7684125/download/1/cardano-node-1.29.0-linux
     tar -v -C ${TMP_CARDANO_PATH} -xzf - \
     cardano-cli \
     cardano-node \
-    libcharset.1.dylib \
-    libffi.7.dylib \
-    libgmp.10.dylib \
-    libiconv-nocharset.dylib \
-    libiconv.dylib \
-    libsodium.23.dylib \
-    libz.dylib
+#    libcharset.1.dylib \
+#    libffi.7.dylib \
+#    libgmp.10.dylib \
+#    libiconv-nocharset.dylib \
+#    libiconv.dylib \
+#    libsodium.23.dylib \
+#    libz.dylib
 
 # Install cardano-cli
 cp ${TMP_CARDANO_PATH}/cardano-cli /usr/local/bin/
@@ -23,9 +23,9 @@ chmod +x /usr/local/bin/cardano-cli
 chmod +x /usr/local/bin/cardano-node
 
 # Install libs
-mkdir -p /usr/local/lib/cardano
-cp ${TMP_CARDANO_PATH}/*.dylib  /usr/local/lib/cardano/
-for lib in `ls ${TMP_CARDANO_PATH}/*.dylib| xargs -n 1 basename`; do ln -sf /usr/local/lib/cardano/$lib /usr/local/lib/; done
+#mkdir -p /usr/local/lib/cardano
+#cp ${TMP_CARDANO_PATH}/*.dylib  /usr/local/lib/cardano/
+#for lib in `ls ${TMP_CARDANO_PATH}/*.dylib| xargs -n 1 basename`; do ln -sf /usr/local/lib/cardano/$lib /usr/local/lib/; done
 
 # Init config
 
