@@ -5,12 +5,11 @@ export CARDANO_NODE_SOCKET_PATH=${CARDANO_NODE_SOCKET_PATH:-~/cardano-node/node.
 
 # Get balance of the rewards address
 
-REWARD_BALANCE=$(cardano-cli query stake-address-info --mainnet --mary-era --address $(cat stake.addr)| jq .[0].rewardAccountBalance)
+REWARD_BALANCE=$(cardano-cli query stake-address-info --mainnet --address $(cat stake.addr)| jq .[0].rewardAccountBalance)
 echo "REWARD_BALANCE: $REWARD_BALANCE"
 
 # Create protocol.json
 cardano-cli query protocol-parameters \
---mary-era \
 --mainnet \
 --out-file ~/cardano-node/protocol.json
 
