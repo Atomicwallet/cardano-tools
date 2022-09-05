@@ -4,7 +4,7 @@ set -e
 export TMP_CARDANO_PATH=$(mktemp -d)
 trap 'rm -rf -- "$TMP_CARDANO_PATH"' EXIT
 
-curl -s https://hydra.iohk.io/build/12213954/download/1/cardano-node-1.33.0-macos.tar.gz | \
+curl -s https://hydra.iohk.io/build/13066427/download/1/cardano-node-1.34.1-macos.tar.gz | \
     tar -v -C ${TMP_CARDANO_PATH} -xzf - \
     cardano-cli \
     cardano-node \
