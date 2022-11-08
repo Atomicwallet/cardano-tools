@@ -4,17 +4,20 @@ set -e
 export TMP_CARDANO_PATH=$(mktemp -d)
 trap 'rm -rf -- "$TMP_CARDANO_PATH"' EXIT
 
-curl -s https://hydra.iohk.io/build/12213954/download/1/cardano-node-1.33.0-macos.tar.gz | \
+curl -s https://hydra.iohk.io/build/17428186/download/1/cardano-node-1.35.3-macos.tar.gz | \
     tar -v -C ${TMP_CARDANO_PATH} -xzf - \
     cardano-cli \
     cardano-node \
     libcharset.1.dylib \
-    libffi.7.dylib \
+    libffi.8.dylib \
     libgmp.10.dylib \
     libiconv-nocharset.dylib \
     libiconv.dylib \
     libsodium.23.dylib \
-    libz.dylib
+    libz.dylib \
+    libssl.1.1.dylib \
+    libcrypto.1.1.dylib \
+    libsecp256k1.0.dylib
 
 # Install cardano-cli
 cp ${TMP_CARDANO_PATH}/cardano-cli /usr/local/bin/
