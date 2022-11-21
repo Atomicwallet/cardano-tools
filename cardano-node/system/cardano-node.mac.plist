@@ -12,21 +12,21 @@
     <integer>20</integer>
 
     <key>StandardErrorPath</key>
-    <string>/Users/${USER}/cardano-node/stderr.log</string>
+    <string>/Users/${AS_USER}/cardano-node/stderr.log</string>
 
     <key>StandardOutPath</key>
-    <string>/Users/${USER}/cardano-node/stdout.log</string>
+    <string>/Users/${AS_USER}/cardano-node/stdout.log</string>
 
     
     <key>ProgramArguments</key>
     <array>
             <string>/usr/local/bin/cardano-node</string>
             <string>run</string>
-            <string>--config=/Users/${USER}/cardano-node/configuration/cardano/mainnet-config.json</string>
-            <string>--database-path=/Users/${USER}/cardano-node/data/db</string>
-            <string>--topology=/Users/${USER}/cardano-node/configuration/cardano/mainnet-topology.json</string>
+            <string>--config=/Users/${AS_USER}/cardano-node/configuration/cardano/mainnet-config.json</string>
+            <string>--database-path=/Users/${AS_USER}/cardano-node/data/db</string>
+            <string>--topology=/Users/${AS_USER}/cardano-node/configuration/cardano/mainnet-topology.json</string>
             <string>--port=3001</string>
-            <string>--socket-path=/Users/${USER}/cardano-node/node.socket</string>
+            <string>--socket-path=/Users/${AS_USER}/cardano-node/node.socket</string>
     </array>
 </dict>
 </plist>
