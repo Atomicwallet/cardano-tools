@@ -3,7 +3,7 @@ set -e
 
 export TMP_CARDANO_PATH=$(mktemp -d)
 AS_USER=$SUDO_USER
-if [ -z "$SUDO_USER"]; then
+if [ -z "$SUDO_USER" ]; then
     AS_USER=$USER
 fi
 
