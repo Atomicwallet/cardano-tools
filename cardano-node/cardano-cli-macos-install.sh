@@ -2,11 +2,12 @@
 set -e
 
 export TMP_CARDANO_PATH=$(mktemp -d)
-AS_USER=$SUDO_USER
+
+export AS_USER=$SUDO_USER
 if [[ -z $SUDO_USER ]]; then
-    AS_USER=$USER
+    export AS_USER=$USER
 fi
-export AS_USER=${AS_USER}
+
 trap 'rm -rf -- "$TMP_CARDANO_PATH"' EXIT
 
 curl -s https://hydra.iohk.io/build/17428186/download/1/cardano-node-1.35.3-macos.tar.gz | \
