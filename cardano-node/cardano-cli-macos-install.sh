@@ -53,6 +53,7 @@ wget -q https://raw.githubusercontent.com/Atomicwallet/cardano-tools/main/cardan
 wget -q https://raw.githubusercontent.com/Atomicwallet/cardano-tools/main/cardano-node/bin/cardano_calm_rewards -O /usr/local/bin/cardano_calm_rewards
 wget -q https://raw.githubusercontent.com/Atomicwallet/cardano-tools/main/cardano-node/bin/cardano_send_amount -O /usr/local/bin/cardano_send_amount
 
+chown -R ${AS_USER} ~/cardano-node/
 
 chmod +x /usr/local/bin/cardano-sync-status
 chmod +x /usr/local/bin/cardano_generate_keys
