@@ -10,7 +10,7 @@ fi
 
 trap 'rm -rf -- "$TMP_CARDANO_PATH"' EXIT
 
-curl -s https://hydra.iohk.io/build/17428186/download/1/cardano-node-1.35.3-macos.tar.gz | \
+curl -s https://update-cardano-mainnet.iohk.io/cardano-node-releases/cardano-node-1.35.4-macos.tar.gz | \
     tar -v -C ${TMP_CARDANO_PATH} -xzf - \
     cardano-cli \
     cardano-node \
@@ -21,8 +21,8 @@ curl -s https://hydra.iohk.io/build/17428186/download/1/cardano-node-1.35.3-maco
     libiconv.dylib \
     libsodium.23.dylib \
     libz.dylib \
-    libssl.1.1.dylib \
-    libcrypto.1.1.dylib \
+    libssl.3.dylib \
+    libcrypto.3.dylib \
     libsecp256k1.0.dylib
 
 # Install cardano-cli
@@ -41,11 +41,11 @@ for lib in `ls ${TMP_CARDANO_PATH}/*.dylib| xargs -n 1 basename`; do ln -sf /usr
 mkdir -p ~/cardano-node/configuration/cardano/
 mkdir -p ~/cardano-node/data
 
-wget -q https://hydra.iohk.io/job/Cardano/cardano-node/cardano-deployment/latest-finished/download/1/mainnet-config.json -O ~/cardano-node/configuration/cardano/mainnet-config.json
-wget -q https://hydra.iohk.io/job/Cardano/cardano-node/cardano-deployment/latest-finished/download/1/mainnet-byron-genesis.json -O ~/cardano-node/configuration/cardano/mainnet-byron-genesis.json
-wget -q https://hydra.iohk.io/job/Cardano/cardano-node/cardano-deployment/latest-finished/download/1/mainnet-shelley-genesis.json -O ~/cardano-node/configuration/cardano/mainnet-shelley-genesis.json
-wget -q https://hydra.iohk.io/job/Cardano/cardano-node/cardano-deployment/latest-finished/download/1/mainnet-topology.json -O ~/cardano-node/configuration/cardano/mainnet-topology.json
-wget -q https://hydra.iohk.io/job/Cardano/cardano-node/cardano-deployment/latest-finished/download/1/mainnet-alonzo-genesis.json -O ~/cardano-node/configuration/cardano/mainnet-alonzo-genesis.json
+wget -q https://book.world.dev.cardano.org/environments/mainnet/config.json -O ~/cardano-node/configuration/cardano/mainnet-config.json
+wget -q https://book.world.dev.cardano.org/environments/mainnet/byron-genesis.json -O ~/cardano-node/configuration/cardano/byron-genesis.json
+wget -q https://book.world.dev.cardano.org/environments/mainnet/shelley-genesis.json -O ~/cardano-node/configuration/cardano/shelley-genesis.json
+wget -q https://book.world.dev.cardano.org/environments/mainnet/topology.json -O ~/cardano-node/configuration/cardano/mainnet-topology.json
+wget -q https://book.world.dev.cardano.org/environments/mainnet/alonzo-genesis.json -O ~/cardano-node/configuration/cardano/alonzo-genesis.json
 wget -q https://raw.githubusercontent.com/Atomicwallet/cardano-tools/main/cardano-node/system/cardano-node.mac.plist -O ${TMP_CARDANO_PATH}/cardano-node.mac.plist
 wget -q https://raw.githubusercontent.com/Atomicwallet/cardano-tools/main/cardano-node/bin/cardano-sync-status -O /usr/local/bin/cardano-sync-status
 wget -q https://raw.githubusercontent.com/Atomicwallet/cardano-tools/main/cardano-node/bin/cardano_generate_keys -O /usr/local/bin/cardano_generate_keys
